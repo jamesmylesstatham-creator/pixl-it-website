@@ -57,4 +57,36 @@
   }
   if (cookieAccept) cookieAccept.addEventListener('click', function () { setConsent('accepted'); });
   if (cookieDecline) cookieDecline.addEventListener('click', function () { setConsent('declined'); });
+
+  var contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    var statusEl = document.getElementById('contact-form-status');
+    var submitBtn = contactForm.querySelector('button[type="submit"]');
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (contactForm.querySelector('.hp-field input').value) return; // honeypot tripped
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+      if (statusEl) { statusEl.removeAttribute('data-state'); statusEl.textContent = ''; }
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(contactForm)
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data.success) {
+            contactForm.reset();
+            if (statusEl) { statusEl.textContent = "Thanks — we'll be in touch shortly."; statusEl.setAttribute('data-state', 'ok'); }
+          } else {
+            if (statusEl) { statusEl.textContent = 'Something went wrong sending that — please email or call us instead.'; statusEl.setAttribute('data-state', 'error'); }
+          }
+        })
+        .catch(function () {
+          if (statusEl) { statusEl.textContent = 'Something went wrong sending that — please email or call us instead.'; statusEl.setAttribute('data-state', 'error'); }
+        })
+        .finally(function () {
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Send message'; }
+        });
+    });
+  }
 })();
