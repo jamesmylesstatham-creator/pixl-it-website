@@ -1,38 +1,7 @@
+/* Dark is the default look regardless of the visitor's OS setting —
+   :root carries the dark palette, and an explicit light choice overrides it. */
 :root{
-  --bg:#F5F6F1;
-  --surface:#FFFFFF;
-  --surface-alt:#EAEEE3;
-  --ink:#0E1712;
-  --ink-soft:#4B5A50;
-  --ink-faint:#7C8B81;
-  --line:#DBE0D3;
-  --brand:#1E9E49;
-  --brand-deep:#0F3320;
-  --brand-deep-ink:#F5F6F1;
-  --status-warn:#C98A2E;
-  --logo-badge:#0E1712;
-  --logo-pixel:#1E9E49;
-  --shadow: 0 1px 2px rgba(14,23,18,0.04), 0 8px 24px -12px rgba(14,23,18,0.16);
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0A100C;
-    --surface:#111B14;
-    --surface-alt:#15211A;
-    --ink:#ECF1EA;
-    --ink-soft:#A7B6AC;
-    --ink-faint:#6E7D74;
-    --line:#233024;
-    --brand:#3BD46E;
-    --brand-deep:#15351F;
-    --brand-deep-ink:#ECF1EA;
-    --status-warn:#E8B655;
-    --logo-badge:#3BD46E;
-    --logo-pixel:#0A100C;
-    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
-  }
-}
-:root[data-theme="dark"]{
+  color-scheme: dark;
   --bg:#0A100C;
   --surface:#111B14;
   --surface-alt:#15211A;
@@ -47,6 +16,23 @@
   --logo-badge:#3BD46E;
   --logo-pixel:#0A100C;
   --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#F5F6F1;
+  --surface:#FFFFFF;
+  --surface-alt:#EAEEE3;
+  --ink:#0E1712;
+  --ink-soft:#4B5A50;
+  --ink-faint:#7C8B81;
+  --line:#DBE0D3;
+  --brand:#1E9E49;
+  --brand-deep:#0F3320;
+  --brand-deep-ink:#F5F6F1;
+  --status-warn:#C98A2E;
+  --logo-badge:#0E1712;
+  --logo-pixel:#1E9E49;
+  --shadow: 0 1px 2px rgba(14,23,18,0.04), 0 8px 24px -12px rgba(14,23,18,0.16);
 }
 
 /* accessibility mode: larger text (rem-driven, so it scales the whole page)
@@ -67,7 +53,6 @@
 }
 
 *{box-sizing:border-box;}
-html{color-scheme:light dark;}
 body{
   margin:0;
   background:var(--bg);
@@ -147,14 +132,11 @@ section{padding-block:clamp(56px,9vw,104px);}
 .icon-btn[aria-pressed="true"]{
   background:var(--brand-deep); border-color:var(--brand-deep); color:var(--brand-deep-ink);
 }
-.icon-sun{display:none;}
-.icon-moon{display:block;}
-:root[data-theme="dark"] .icon-sun{display:block;}
-:root[data-theme="dark"] .icon-moon{display:none;}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .icon-sun{display:block;}
-  :root:not([data-theme="light"]) .icon-moon{display:none;}
-}
+/* dark is the default, so the sun (switch-to-light) icon shows by default */
+.icon-sun{display:block;}
+.icon-moon{display:none;}
+:root[data-theme="light"] .icon-sun{display:none;}
+:root[data-theme="light"] .icon-moon{display:block;}
 .menu-btn{
   display:none; background:none; border:1px solid var(--line); border-radius:8px;
   width:40px; height:40px; color:var(--ink); cursor:pointer;
@@ -463,21 +445,37 @@ footer{background:var(--bg);}
   .included-grid{grid-template-columns:1fr;}
 }
 @media (max-width:640px){
+  .nav-row{padding-block:12px;}
   .nav-links, .nav-cta .btn-ghost, .nav-cta .btn-primary{display:none;}
   .menu-btn{display:flex; align-items:center; justify-content:center;}
   #nav-toggle:checked ~ .nav-links{
     display:flex; position:absolute; top:100%; left:0; right:0; background:var(--surface);
     border-bottom:1px solid var(--line); flex-direction:column; align-items:flex-start; gap:0; padding:8px 24px 16px;
+    max-height:calc(100vh - 64px); overflow-y:auto;
   }
-  #nav-toggle:checked ~ .nav-links a{padding-block:10px; width:100%;}
+  #nav-toggle:checked ~ .nav-links a{padding-block:12px; width:100%; font-size:1rem;}
   .services-grid{grid-template-columns:1fr;}
   .footer-grid{grid-template-columns:1fr;}
   .testimonial{grid-template-columns:1fr;}
   .testimonial-more{grid-template-columns:1fr;}
   .strip .wrap{justify-content:flex-start;}
+  .quote-mark{font-size:3rem;}
+  .cta-grid, .hero-grid{gap:40px;}
 }
 @media (max-width:480px){
   .cookie-inner{flex-direction:column; align-items:flex-start;}
   .cookie-actions{width:100%;}
   .cookie-actions .btn{flex:1; justify-content:center;}
+  .hero-actions, .cta-actions{flex-direction:column; align-items:stretch;}
+  .hero-actions .btn, .cta-actions .btn{justify-content:center;}
+  .attribution{flex-wrap:wrap;}
+}
+@media (max-width:400px){
+  .wrap{padding-inline:16px;}
+  .icon-btn{width:36px; height:36px;}
+  .util-btns{gap:6px;}
+  .nav-cta{gap:8px;}
+  .logo{font-size:1.1rem; gap:8px;}
+  .logo-mark{width:28px; height:28px;}
+  .menu-btn{width:36px; height:36px;}
 }

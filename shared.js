@@ -24,9 +24,9 @@
 
   if (themeBtn) {
     themeBtn.addEventListener('click', function () {
+      // dark is the site default, so an unset theme counts as dark
       var current = root.getAttribute('data-theme');
-      var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      var isDark = current ? current === 'dark' : systemDark;
+      var isDark = current ? current === 'dark' : true;
       var next = isDark ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
       write('pixl-theme', next);
