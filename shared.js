@@ -3,8 +3,7 @@
   var themeBtn = document.getElementById('theme-toggle');
   var a11yBtn = document.getElementById('a11y-toggle');
   var cookieBanner = document.getElementById('cookie-banner');
-  var cookieAccept = document.getElementById('cookie-accept');
-  var cookieDecline = document.getElementById('cookie-decline');
+  var cookieDismiss = document.getElementById('cookie-dismiss');
 
   function read(key) {
     try { return localStorage.getItem(key); } catch (e) { return null; }
@@ -48,15 +47,15 @@
     });
   }
 
-  if (cookieBanner && !read('pixl-cookie-consent')) {
+  if (cookieBanner && !read('pixl-notice-seen')) {
     cookieBanner.hidden = false;
   }
-  function setConsent(val) {
-    write('pixl-cookie-consent', val);
-    if (cookieBanner) cookieBanner.hidden = true;
+  if (cookieDismiss) {
+    cookieDismiss.addEventListener('click', function () {
+      write('pixl-notice-seen', 'yes');
+      if (cookieBanner) cookieBanner.hidden = true;
+    });
   }
-  if (cookieAccept) cookieAccept.addEventListener('click', function () { setConsent('accepted'); });
-  if (cookieDecline) cookieDecline.addEventListener('click', function () { setConsent('declined'); });
 
   var contactForm = document.getElementById('contact-form');
   if (contactForm) {
