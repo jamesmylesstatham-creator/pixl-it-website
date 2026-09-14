@@ -367,6 +367,8 @@ section{padding-block:clamp(56px,9vw,104px);}
   display:flex; align-items:center; justify-content:center; font-family:"Chakra Petch"; font-size:1.1rem;
 }
 .testimonial-placeholder p{font-size:0.85rem;}
+.placeholder-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+.placeholder-grid .testimonial-placeholder{min-height:150px;}
 
 /* ---------- CTA band ---------- */
 .cta-band{
@@ -468,6 +470,7 @@ footer{background:var(--bg);}
   .footer-grid{grid-template-columns:1fr 1fr;}
   .about-grid .diagram-wrap{order:-1;}
   .included-grid{grid-template-columns:1fr;}
+  .placeholder-grid{grid-template-columns:1fr 1fr;}
 }
 @media (max-width:640px){
   .nav-row{padding-block:12px;}
@@ -483,6 +486,7 @@ footer{background:var(--bg);}
   .footer-grid{grid-template-columns:1fr;}
   .testimonial{grid-template-columns:1fr;}
   .testimonial-more{grid-template-columns:1fr;}
+  .placeholder-grid{grid-template-columns:1fr;}
   .strip .wrap{justify-content:flex-start;}
   .quote-mark{font-size:3rem;}
   .cta-grid, .hero-grid{gap:40px;}
