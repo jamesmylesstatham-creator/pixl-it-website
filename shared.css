@@ -114,6 +114,7 @@ section{padding-block:clamp(56px,9vw,104px);}
   border-radius:9px; background:var(--logo-badge);
 }
 .logo-mark rect.px1, .logo-mark rect.px2{fill:var(--logo-pixel);}
+.logo-x{color:var(--brand);}
 .nav-links{
   display:flex; align-items:center; gap:32px; list-style:none; margin:0; padding:0;
 }
